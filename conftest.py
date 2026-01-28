@@ -14,10 +14,8 @@ from webdriver_manager.firefox import GeckoDriverManager
 def chrome_driver():
     """
     Фикстура для создания Chrome драйвера
-    
     Returns:
         WebDriver: Экземпляр Chrome драйвера
-        
     Yields:
         WebDriver: Готовый к использованию драйвер
     """
@@ -28,19 +26,15 @@ def chrome_driver():
     chrome_options.add_argument("--disable-dev-shm-usage")
     chrome_options.add_argument("--window-size=1920,1080")
     chrome_options.add_argument("--disable-gpu")
-    
     # Создаем драйвер с автоматической установкой
     driver = webdriver.Chrome(
         service=ChromeService(ChromeDriverManager().install()),
         options=chrome_options
     )
-    
     # Настраиваем неявные ожидания
     driver.implicitly_wait(10)
-    
     # Возвращаем драйвер для использования в тестах
     yield driver
-    
     # Закрываем драйвер после теста
     with allure.step("Закрытие Chrome драйвера"):
         driver.quit()
@@ -51,29 +45,23 @@ def chrome_driver():
 def firefox_driver():
     """
     Фикстура для создания Firefox драйвера
-    
     Returns:
         WebDriver: Экземпляр Firefox драйвера
-        
     Yields:
         WebDriver: Готовый к использованию драйвер
     """
     # Настройки Firefox для headless режима
     firefox_options = FirefoxOptions()
     firefox_options.add_argument("--headless")
-    
     # Создаем драйвер с автоматической установкой
     driver = webdriver.Firefox(
         service=FirefoxService(GeckoDriverManager().install()),
         options=firefox_options
     )
-    
     # Настраиваем неявные ожидания
     driver.implicitly_wait(10)
-    
     # Возвращаем драйвер для использования в тестах
     yield driver
-    
     # Закрываем драйвер после теста
     with allure.step("Закрытие Firefox драйвера"):
         driver.quit()
